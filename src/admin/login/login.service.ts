@@ -10,12 +10,12 @@ export class LoginService {
       private LoginRepository: Repository<Login>,
     ) {}
   
-   getAllProviders(nombre:string,password:string) {
+   getAdminbyNamePass(nombre:string,password:string) {
        return  this.LoginRepository.findOneBy({
         Nombre: nombre ,
         Contraseña: password
        });
     }
 
-   
+      
 }
