@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Post } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { LoginInput } from './login.interface';
 
@@ -8,8 +8,11 @@ export class LoginController {
 
   @Post('signIn')
   async authenticate(@Body() signInDto: LoginInput) {
-     if(this.loginService.getAdminbyNamePass(signInDto.Nombre,signInDto.Contraseña) != null) {
-        return {signInDto}
+   // Es necesario devolver junto al usuario un token. 
+     const token = this.loginService.getAdminbyNamePass(signInDto.Nombre,signInDto.Contraseña)
+     if(!token) {
+       throw new NotFoundException("No hay un administrador que cumpla");
      }
+     return {signInDto}
   }
 }
