@@ -1,4 +1,4 @@
 export class LoginInput {
-    Nombre: string;
+    Email: string;
     Contraseña:string  
 }

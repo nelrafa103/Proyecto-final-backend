@@ -1,40 +1,46 @@
-import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
 import { ClienteService } from './cliente.service';
 import { appendFile } from 'fs';
-import { ClienteInput } from './cliente.interface';
+import { ClienteInput, ClienteOutput } from './cliente.interface';
+import { sign } from 'crypto';
+import { Resolver } from 'dns';
 
 @Controller('cliente')
 export class ClienteController {
    constructor(private readonly clienteService: ClienteService) {
    }
 
-
+   // Obtener por Id
    @Get(':id')
    async getById(@Param('id') id: number) {
       const cliente = await this.clienteService.findById(id)
-     // console.log(cliente)
+    //  console.log(cliente)
       if(!cliente) {
          throw new NotFoundException('Cliente no encontrado')
       }
          return {cliente}
    }
-
-   @Get(':NandA')
-   async getByNandA(@Param('nombre') n: string,@Param('apellido') a: string) {
-      const cliente = await this.clienteService.findbyNandA({nombre: n, apellido: a})
-
+  // Obtener registro por nombre
+   @Post('nombre')
+   async getByNandA(@Body() signInDto: ClienteOutput) {
+      const cliente = await this.clienteService.findbyN(signInDto.Nombre  )
+   //   console.log(nombre)
       if(!cliente) {
          throw new NotFoundException('Cliente no encontrado por su nombre y apellido')
       }
          return {cliente}
    }
-
-  @Get('All')
+  // Obtener todos los clientes
+  @Get()
   async getAllCliente() {
-   return await this.clienteService.getAllClientes()
+   const cliente = await this.clienteService.getAllClientes()
+   if(!cliente) {
+      throw new NotFoundException('No hay clientes en la tabla')
+   }
+   return {cliente}
   }
-
-  @Post('newClient') 
+  // Añadir nuevo cliente
+  @Post('new') 
   async createNewUser(@Body() signInDto: ClienteInput) {
    const nuevoCliente = await this.clienteService.signUpCliente(signInDto)
    if(!nuevoCliente) {
@@ -43,4 +49,13 @@ export class ClienteController {
    return {nuevoCliente}
   }
 
+
+  @Put('update')
+  async updateUser(@Body() signInDto: ClienteInput) {
+   const modCliente = await this.clienteService.updateCliente(signInDto)
+   if(!modCliente) {
+      throw new Error('No se ha podido actualizar el cliente')
+   }
+   return {modCliente}
+  }
 }

@@ -5,29 +5,31 @@ import { AdminModule } from './admin/admin.module';
 import { ProductosModule } from './productos/productos.module';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
-import { LoginService } from './admin/login/login.service';
 import { LoginModule } from './admin/login/login.module';
 import { ProveedorModule } from './admin/proveedor/proveedor.module';
+import configuracion from '../config/configuration';
+import { Cliente } from './cliente/cliente.model';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
-      port: 33061,
-      username: 'root',
-      password: 'rootpas',
-      database: 'mysql',
-      entities: [],
+      port: configuracion()['local']['docker']['port'],
+      username: configuracion()['local']['docker']['user'],
+      password: configuracion()['local']['docker']['password'],
+      database: 'sys',
+      entities: [Cliente],
       synchronize: true,
     }),
     ClienteModule,
     AdminModule,
     ProductosModule,
     LoginModule,
-    ProveedorModule
+    ProveedorModule,
   ],
   controllers: [AppController],
   providers: [AppService]
+  
 })
 export class AppModule {}

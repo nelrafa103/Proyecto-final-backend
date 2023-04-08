@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('login')
 export class Login {
    @PrimaryGeneratedColumn()
-   Id: number;
+   Id_Admin: number;
  
    @Column()
    Nombre: string;
@@ -14,7 +14,10 @@ export class Login {
 
    @Column()
    Apellido: string;
- 
+   
+   @Column()
+   Email: string;
+  
 
   
 }

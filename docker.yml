@@ -1,0 +1,5 @@
+local: 
+  docker: 
+   port: 3307
+   user: 'root'
+   password: 'rootpas'

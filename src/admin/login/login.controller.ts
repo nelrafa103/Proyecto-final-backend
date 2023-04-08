@@ -9,7 +9,7 @@ export class LoginController {
   @Post('signIn')
   async authenticate(@Body() signInDto: LoginInput) {
    // Es necesario devolver junto al usuario un token. 
-     const token = this.loginService.getAdminbyNamePass(signInDto.Nombre,signInDto.Contraseña)
+     const token = this.loginService.getAdminbyNamePass(signInDto.Email,signInDto.Contraseña)
      if(!token) {
        throw new NotFoundException("No hay un administrador que cumpla");
      }

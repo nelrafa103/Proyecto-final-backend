@@ -14,7 +14,9 @@ export class Admin {
 
    @Column()
    Apellido: string;
- 
+
+   @Column()
+   Email: string;
 
   
 }

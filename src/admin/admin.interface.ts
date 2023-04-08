@@ -3,4 +3,5 @@ export class AdminInput {
    Nombre: string
    Apellido: string
    Contraseña: string
+   Email: string
 }

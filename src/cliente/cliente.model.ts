@@ -4,19 +4,19 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('Cliente')
 export class Cliente {
    @PrimaryGeneratedColumn()
-   Id: number;
+   Id_Cliente: number;
  
-   @Column()
+   @Column({length: 100})
    Nombre: string;
  
-   @Column()
+   @Column({length: 100})
    Apellido:string
  
     
-   @Column()
+   @Column({length: 100})
    NuTarjeta: string
-   
-   @Column()
+
+   @Column({length: 100})
    Telefono:string
 
 }
