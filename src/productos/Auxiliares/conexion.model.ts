@@ -1,9 +1,9 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
-
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+Entity('Conexion');
 export class Conexion {
-   @PrimaryGeneratedColumn()
-   Id_Conexion: number
+  @PrimaryGeneratedColumn()
+  Id_Conexion: number;
 
-   @Column()
-   Nombre: string
+  @Column()
+  Nombre: string;
 }

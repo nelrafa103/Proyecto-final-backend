@@ -12,14 +12,16 @@ export class AdminService {
   ) {}
 
   getAllAdmin() {
-   // this.AdminRepository.find({ select: { Nombre: true, Apellido: true } });
-   return this.AdminRepository.query(`SELECT email FROM admin; `)
+    // this.AdminRepository.find({ select: { Nombre: true, Apellido: true } });
+    return this.AdminRepository.query(`SELECT email FROM admin; `);
   }
   getAdminByName(param: { Nombre }) {
-   // this.AdminRepository.findBy({ Nombre: param.Nombre });
-   return this.AdminRepository.query(`SELECT email FROM admin WHERE nombre = '${param.Nombre}';   `)
+    // this.AdminRepository.findBy({ Nombre: param.Nombre });
+    return this.AdminRepository.query(
+      `SELECT email FROM admin WHERE nombre = '${param.Nombre}';   `,
+    );
   }
-  createNewAdmin(param: AdminInput) {
+  async createNewAdmin(param: AdminInput) {
     /* const newAdmin = this.AdminRepository.create(
          {
             Nombre: param.Nombre,
@@ -31,7 +33,7 @@ export class AdminService {
 
       return this.AdminRepository.save(newAdmin); */
     return this.AdminRepository
-      .query(`INSERT INTO admin (nombre, apellido, email,contraseña ) VALUES ('${param.Nombre}', '${param.Apellido}', '${param.Email}', '${param.Contraseña}');
+      .query(`INSERT INTO Admin (Nombre, Apellido, Email,Contraseña ) VALUES ('${param.Nombre}', '${param.Apellido}', '${param.Email}', '${param.Contraseña}');
       `);
   }
   updateAdmin(param: AdminInput) {
@@ -45,14 +47,14 @@ export class AdminService {
      })
      */
     return this.AdminRepository
-      .query(`UPDATE admin SET nombre = '${param.Nombre}', apellido = '${param.Apellido}', password = '${param.Contraseña}', email = '${param.Email}' WHERE id_admin = ${param.Id};
+      .query(`UPDATE Admin SET nombre = '${param.Nombre}', apellido = '${param.Apellido}', password = '${param.Contraseña}', email = '${param.Email}' WHERE id_admin = ${param.Id};
     `);
   }
 
   getAdminbyId(id: number) {
     //return this.AdminRepository.findOneBy({Id:id})
     return this.AdminRepository.query(
-      `SELECT email FROM admin WHERE id_admin = ${id};     `,
+      `SELECT email FROM Admin WHERE id_admin = ${id};     `,
     );
   }
 }

@@ -1,9 +1,9 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
-
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+Entity('Marca');
 export class Marca {
-   @PrimaryGeneratedColumn()
-   Id_Marca: number
+  @PrimaryGeneratedColumn()
+  Id_Marca: number;
 
-   @Column()
-   Nombre: string
+  @Column()
+  Nombre: string;
 }

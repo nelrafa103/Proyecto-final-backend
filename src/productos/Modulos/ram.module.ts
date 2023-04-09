@@ -5,12 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { RamService } from '../Servicios/ram.service';
 
 @Module({
-   imports: [
-     TypeOrmModule.forFeature([Ram]),
-  ],
-    controllers: [],
-    exports: [RamService],
-   providers: [RamService],
-   
- })
+  imports: [TypeOrmModule.forFeature([Ram])],
+  controllers: [],
+  exports: [RamService],
+  providers: [RamService],
+})
 export class RamModule {}

@@ -1,5 +1,5 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+Entity('Tipo');
 export class Tipo {
   @PrimaryGeneratedColumn()
   Id_Tipo: number;

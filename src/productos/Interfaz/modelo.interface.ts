@@ -1,3 +1,3 @@
 export interface ModeloInput {
-   Nombre: string
+  Nombre: string;
 }

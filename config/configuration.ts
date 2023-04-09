@@ -8,6 +8,6 @@ function configuracion() {
   return yaml.load(
     readFileSync(join('./', YAML_CONFIG_FILENAME), 'utf8'),
   ) as Record<string, any>;
-} 
- 
+}
+
 export default configuracion;

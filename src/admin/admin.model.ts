@@ -1,22 +1,19 @@
- 
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('Admin')
 export class Admin {
-   @PrimaryGeneratedColumn()
-   Id: number;
- 
-   @Column()
-   Nombre: string;
- 
-   @Column()
-   Contraseña:string;
+  @PrimaryGeneratedColumn()
+  Id: number;
 
-   @Column()
-   Apellido: string;
+  @Column()
+  Nombre: string;
 
-   @Column()
-   Email: string;
+  @Column()
+  Contraseña: string;
 
-  
+  @Column()
+  Apellido: string;
+
+  @Column()
+  Email: string;
 }

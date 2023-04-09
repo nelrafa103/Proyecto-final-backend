@@ -5,12 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { MotheboardService } from '../Servicios/motheboard.service';
 
 @Module({
-   imports: [
-     TypeOrmModule.forFeature([Tarjeta]),
-  ],
-    controllers: [],
-    exports: [MotheboardService],
-   providers: [MotheboardService],
-   
- })
+  imports: [TypeOrmModule.forFeature([Tarjeta])],
+  controllers: [],
+  exports: [MotheboardService],
+  providers: [MotheboardService],
+})
 export class MotherboardModule {}

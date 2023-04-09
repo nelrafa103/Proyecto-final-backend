@@ -1,3 +1,3 @@
 export class MarcaInput {
-  Nombre: string
+  Nombre: string;
 }

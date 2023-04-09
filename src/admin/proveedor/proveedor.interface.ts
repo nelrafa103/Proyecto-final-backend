@@ -1,5 +1,5 @@
 export class ProveedorInput {
-   Id: number
-   Nombre: string
-   Apellido: string
+  Id: number;
+  Nombre: string;
+  Apellido: string;
 }

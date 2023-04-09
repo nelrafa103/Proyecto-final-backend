@@ -5,15 +5,23 @@ import { Procesador } from '../Categorias/procesor.model';
 
 @Injectable()
 export class ChipService {
-   constructor(
-      @InjectRepository(Procesador)
-      private ClienteRepository: Repository<Procesador>,
-    ) { }
-  
-   insertProcesador(arg: {Nombre: string}) {
-     this.ClienteRepository.query(`INSERT INTO Procesador (nombre) VALUES ('${arg.Nombre}');`)
-   }
-   updateProcesadorbyId(arg: {Id: number, Nombre: string}) {
-      this.ClienteRepository.query(`UPDATE Procesador SET nombre = '${arg.Nombre}' WHERE Id = '${arg.Id}';`)
-   }
+  constructor(
+    @InjectRepository(Procesador)
+    private ClienteRepository: Repository<Procesador>,
+  ) {}
+
+  insertProcesador(arg: {
+    Id_Modelo: number;
+    Velocidad: number;
+    Id_Producto: number;
+  }) {
+    this.ClienteRepository.query(
+      `INSERT INTO Procesador (Id_Modelo, Velocidad,Id_Producto) VALUES ('${arg.Id_Modelo}', '${arg.Velocidad}', '${arg.Id_Producto}');`,
+    );
+  }
+  updateProcesadorbyId(arg: { Id: number; Nombre: string }) {
+    this.ClienteRepository.query(
+      `UPDATE Procesador SET nombre = '${arg.Nombre}' WHERE Id = '${arg.Id}';`,
+    );
+  }
 }

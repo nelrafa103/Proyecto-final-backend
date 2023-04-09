@@ -1,7 +1,7 @@
 export class AdminInput {
-   Id: number
-   Nombre: string
-   Apellido: string
-   Contraseña: string
-   Email: string
+  Id: number;
+  Nombre: string;
+  Apellido: string;
+  Contraseña: string;
+  Email: string;
 }

@@ -29,7 +29,6 @@ import { Cliente } from './cliente/cliente.model';
     ProveedorModule,
   ],
   controllers: [AppController],
-  providers: [AppService]
-  
+  providers: [AppService],
 })
 export class AppModule {}

@@ -9,12 +9,13 @@ import { Admin } from './admin.model';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ Admin]),
-    AdminModule, ProveedorModule,LoginModule
- ],
-   controllers: [LoginController, AdminController],
-   exports: [AdminService],
+    TypeOrmModule.forFeature([Admin]),
+    AdminModule,
+    ProveedorModule,
+    LoginModule,
+  ],
+  controllers: [LoginController, AdminController],
+  exports: [AdminService],
   providers: [AdminService],
-  
 })
 export class AdminModule {}

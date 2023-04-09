@@ -59,7 +59,7 @@ export class ProveedorController {
   }
   @Put(':id')
   deleteProveedorbyId(@Param('id') id: number) {
-   const nuevo = this.ProveedorService.deleteProveedorById(id)
+    const nuevo = this.ProveedorService.deleteProveedorById(id);
     if (!nuevo) {
       throw new NotFoundException('El proveedor no se podido borrar');
     }

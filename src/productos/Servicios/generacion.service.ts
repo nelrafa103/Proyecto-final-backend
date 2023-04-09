@@ -5,15 +5,19 @@ import { Generacion } from '../Auxiliares/generacion.model';
 
 @Injectable()
 export class GeneracionService {
-   constructor(
-      @InjectRepository(Generacion)
-      private ClienteRepository: Repository<Generacion>,
-    ) { }
-  
-   insertGeneracion(arg: {Nombre: string}) {
-     this.ClienteRepository.query(`INSERT INTO Generacion (nombre) VALUES ('${arg.Nombre}');`)
-   }
-   updateGeneracionbyId(arg: {Id: number, Nombre: string}) {
-      this.ClienteRepository.query(`UPDATE Generacion SET nombre = '${arg.Nombre}' WHERE Id_Generacion = '${arg.Id}';`)
-   }
+  constructor(
+    @InjectRepository(Generacion)
+    private ClienteRepository: Repository<Generacion>,
+  ) {}
+
+  insertGeneracion(arg: { Nombre: string }) {
+    this.ClienteRepository.query(
+      `INSERT INTO Generacion (nombre) VALUES ('${arg.Nombre}');`,
+    );
+  }
+  updateGeneracionbyId(arg: { Id: number; Nombre: string }) {
+    this.ClienteRepository.query(
+      `UPDATE Generacion SET nombre = '${arg.Nombre}' WHERE Id_Generacion = '${arg.Id}';`,
+    );
+  }
 }

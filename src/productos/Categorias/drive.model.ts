@@ -1,7 +1,8 @@
-import { Column, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Producto } from "../producto.model";
 import { Modelo } from "../Auxiliares/modelo.model";
 
+@Entity('DiscoDuro')
 export class DiscoDuro {
    @PrimaryGeneratedColumn()
    Id: number;
