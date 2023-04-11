@@ -15,7 +15,7 @@ export class ClienteService {
   async getAllClientes(): Promise<Cliente[]> {
     return this.ClienteRepository.query(`   
     SELECT Nombre,Apellido,F.Fecha,F.Total,D.Id_Producto  FROM Cliente as C
-    JOIN Factura as F on F.Id_Factura = C.Id_Cliente
+    JOIN Factura as F on F.Id_Cliente = C.Id_Cliente
     Join Detalle as D on D.Id_Factura = F.Id_Factura  
     `);
   }
@@ -51,7 +51,7 @@ export class ClienteService {
     `);
   }
 
-  updateCliente(nuevo: ClienteInput) {
+  async updateCliente(nuevo: ClienteInput) {
     /*return this.ClienteRepository.update({
       Id_Cliente: nuevo.Id
     }, {
@@ -60,8 +60,8 @@ export class ClienteService {
     }) */
 
     return this.ClienteRepository.query(`UPDATE Cliente
-    SET nombre = '${nuevo.Nombre}', apellido = '${nuevo.Apellido}', telefono = '${nuevo.Telefono}', NuTarjeta = '${nuevo.NuTarjeta}' 
-    WHERE id_Cliente = '${nuevo.Id}';
+    SET Nombre = '${nuevo.Nombre}', Apellido = '${nuevo.Apellido}', Telefono = '${nuevo.Telefono}', NuTarjeta = '${nuevo.NuTarjeta}' 
+    WHERE Id_Cliente = '${nuevo.Id}';
     `);
   }
   deleteClientById(id: number) {
@@ -70,7 +70,7 @@ export class ClienteService {
       Id_Cliente: id
     }) */
     return this.ClienteRepository.query(`DELETE FROM Cliente
-    WHERE id_Cliente = '${id}';
+    WHERE Id_Cliente = '${id}';
     `);
   }
 }

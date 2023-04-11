@@ -21,16 +21,17 @@ export class ProveedorController {
 
   @Get()
   async getAllProviders() {
+    
     const proveedor = await this.ProveedorService.getAllProveedor();
     let productos: Array<any>;
-    proveedor.forEach((element) => {
+   /* proveedor.forEach((element) => {
       productos.push(
         this.almacenService.getAdquisicionesbyId({ Id: element.Id }),
       );
-    });
+    }); */
     return {
       proveedor,
-      productos,
+    
       columnas: ['Nombre', 'Apellido','Precio','Cantidad comprada','Precio de Compra', 'Id del Producto' ],
     };
   }
@@ -42,11 +43,12 @@ export class ProveedorController {
    Join Producto as Pr on Pr.Id_Producto = A.Id_Producto
 */ 
   @Post('new')
-  insertNewProveedor(@Body() signInDto: ProveedorInput) {
-    const nuevo = this.ProveedorService.insertProveedor(signInDto);
+  async insertNewProveedor(@Body() signInDto: ProveedorInput) {
+    const nuevo = await this.ProveedorService.insertProveedor(signInDto);
     if (!nuevo) {
       throw new NotFoundException('El proveedor no se ha podido crear');
     }
+    console.log(signInDto)
     return { nuevo };
   }
 

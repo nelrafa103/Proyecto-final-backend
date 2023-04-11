@@ -18,7 +18,7 @@ export class AlmacenService {
     Compra: number
   }) {
     return this.AdquisicionesRepository.query(
-      `INSERT INTO Adquisiones (Id_Proveedor,Id_Producto,Cantidad,Compra,Fecha) VALUES ('${arg.Id_Producto}', '${arg.Id_Producto}', '${arg.Cantidad}', '${arg.Compra}', '${arg.Fecha}');`,
+      `INSERT INTO Adquisiones (Id_Proveedor,Id_Producto,Cantidad,Compra,Fecha) VALUES ('${arg.Id_Proveedor}', '${arg.Id_Producto}', '${arg.Cantidad}', '${arg.Compra}', '${arg.Fecha}');`,
     );
   }
   getAdquisicionesbyId(arg: { Id: number; }) {

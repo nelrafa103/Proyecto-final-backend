@@ -1,7 +1,8 @@
 export interface ComboInput {
   Nombre: string;
   Precio: number;
-  Detalles: ComboDetalle[];
+  Cantidad: number
+ // Detalles: ComboDetalle[];
 }
 
 type ComboDetalle = {

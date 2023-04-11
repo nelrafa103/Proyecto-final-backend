@@ -10,3 +10,7 @@ export interface ClienteOutput {
   Nombre: string;
   Apellido: string;
 }
+
+export interface ClienteInput2 {
+  Id_Cliente: number
+}

@@ -9,10 +9,21 @@ export class ComboService {
     @InjectRepository(Combo)
     private ClienteRepository: Repository<Combo>,
   ) {}
+ /* 
+ function validarNombre(nombre: string): boolean {
+  const regex = /^[A-Za-záéíóúÁÉÍÓÚñÑ]+([ ][A-Za-záéíóúÁÉÍÓÚñÑ]+)*$/;
+  return regex.test(nombre);
+}
 
-  async insertCombo(arg: { Nombre: string; Precio: number }) {
+function validarApellido(apellido: string): boolean {
+  const regex = /^[A-Za-záéíóúÁÉÍÓÚñÑ]+$/;
+  return regex.test(apellido);
+}
+
+ */
+  async insertCombo(arg: { Nombre: string; Precio: number, Cantidad: number }) {
     return this.ClienteRepository.query(
-      `INSERT INTO Combo (Nombre, Precio) VALUES ('${arg.Nombre}, '${arg.Precio}' );`,
+      `INSERT INTO Combo (Nombre, Precio) VALUES ('${arg.Nombre}', '${arg.Precio}'  );`,
     );
   }
   updateCombobyId(arg: { Id: number; Nombre: string }) {

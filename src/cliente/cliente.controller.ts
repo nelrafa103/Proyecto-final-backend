@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ClienteService } from './cliente.service';
 import { appendFile } from 'fs';
-import { ClienteInput, ClienteOutput } from './cliente.interface';
+import { ClienteInput, ClienteInput2, ClienteOutput } from './cliente.interface';
 import { sign } from 'crypto';
 import { Resolver } from 'dns';
 import { FacturaService } from 'src/productos/Servicios/factura.service';
@@ -83,5 +83,14 @@ export class ClienteController {
       throw new Error('No se ha podido actualizar el cliente');
     }
     return { modCliente };
+  }
+  @Post('delete')
+  async delete(@Body('id') id: ClienteInput2) {
+    const cliente = await this.clienteService.deleteClientById(id.Id_Cliente)
+    //  console.log(cliente)
+    if (!cliente) {
+      throw new NotFoundException('Cliente no encontrado');
+    }
+    return { cliente };
   }
 }

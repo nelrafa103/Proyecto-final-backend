@@ -35,4 +35,10 @@ export class ProductoService {
      Join Marca as M on M.Id_Marca = P.Id_Marca ;
     `)
   }
+
+  async deleteProduct(id:number) {
+    return this.ProductoRepository.query(`
+      DELETE From Producto WHERE Id_Producto='${id}'
+    `)
+  }
 }

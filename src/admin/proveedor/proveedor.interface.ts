@@ -2,7 +2,7 @@ export class ProveedorInput {
   Id: number;
   Nombre: string;
   Apellido: string;
-  Productos: producto[]
+ 
 }
 
 type producto = {

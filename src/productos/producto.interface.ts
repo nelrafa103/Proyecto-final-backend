@@ -12,3 +12,8 @@ export interface ProductoInput {
   Fecha: Date
   Compra: number
 }
+
+
+export interface ProductInput2 {
+  Id_Producto: number
+}
