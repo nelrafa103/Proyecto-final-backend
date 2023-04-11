@@ -10,38 +10,41 @@ export class ProveedorService {
     @InjectRepository(Proveedor)
     private ProveedorRepository: Repository<Proveedor>,
   ) {}
-  getProveedorById(Id: number) {
+  async getProveedorById(Id: number) {
     return this.ProveedorRepository.query(
       `SELECT * FROM Proveedor WHERE Id_Proveedor = ${Id};`,
     );
     //
   }
 
-  getProveedorByNandA(param: { Nombre: string; Apellido: string }) {
+  async getProveedorByNandA(param: { Nombre: string; Apellido: string }) {
     return this.ProveedorRepository
-      .query(`SELECT Id_Proveedor FROM Proveedor WHERE nombre = '${param.Nombre}' AND apellido = '${param.Apellido}';
+      .query(`SELECT Id_Proveedor FROM Proveedor WHERE Nombre = '${param.Nombre}' AND apellido = '${param.Apellido}';
     `);
   }
 
-  insertProveedor(input: ProveedorInput) {
+  async insertProveedor(input: ProveedorInput) {
     return this.ProveedorRepository
-      .query(`INSERT INTO Proveedor (nombre, apellido) VALUES ('${input.Nombre}', '${input.Apellido}');
+      .query(`INSERT INTO Proveedor (Nombre, apellido) VALUES ('${input.Nombre}', '${input.Apellido}');
    `);
   }
 
-  updateProveedor(input: ProveedorInput) {
+  async updateProveedor(input: ProveedorInput) {
     return this.ProveedorRepository
-      .query(`UPDATE Proveedor SET nombre = '${input.Nombre}', apellido = '${input.Apellido}',  WHERE id = ${input.Id};
+      .query(`UPDATE Proveedor SET Nombre = '${input.Nombre}', apellido = '${input.Apellido}',  WHERE id = ${input.Id};
     `);
   }
 
-  deleteProveedorById(Id: number) {
+  async deleteProveedorById(Id: number) {
     return this.ProveedorRepository.query(
       `DELETE FROM Proveedor WHERE id = ${Id};   `,
     );
   }
 
-  getAllProveedor() {
-    this.ProveedorRepository.query(`SELECT Nombre,Apellido FROM Proveedor`);
+ async getAllProveedor(): Promise<Proveedor[]> {
+   return this.ProveedorRepository.query(`    
+   SELECT Nombre,Apellido,Pr.Precio,A.Cantidad,A.Compra,A.Id_Producto FROM Proveedor as P
+   Join Adquisiones as A on A.Id_Proveedor = P.Id_Proveedor
+   Join Producto as Pr on Pr.Id_Producto = A.Id_Producto`);
   }
 }

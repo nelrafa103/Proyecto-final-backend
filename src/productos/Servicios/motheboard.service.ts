@@ -20,10 +20,15 @@ export class MotheboardService {
       `UPDATE Tarjeta SET nombre = '${arg.Nombre}' WHERE id = '${arg.Id}';`,
     );
   }
-  getAllMotherboard() {
+  async getAllMotherboard() {
     return this.ClienteRepository
-      .query(`SELECT M.Nombre, Id_Generacion FROM Tarjeta T JOIN Modelo M
-      ON T.modelo_id = M.id`);
+      .query(`SELECT M.Nombre as Modelo, M2.Nombre as Marca ,C2.Nombre as Conexion,G.Nombre as Generacion, T.Id_Producto, P.Precio , P.Cantidad  as Id  FROM Tarjeta as T
+      Join Modelo as M on M.Id_Modelo = T.Id_Modelo 
+      Join Producto as P ON P.Id_Producto = T.Id_Producto 
+      Join Marca as M2 on P.Id_Marca = M2.Id_Marca
+      Join Generacion as G on G.Id_Generacion = T.Id_Generacion
+      Join Conexiones as C on C.Id_Producto  = T.Id_Producto 
+      Join Conexion as C2 on C2.Id_Conexion = C.Id_Conexion `);
   }
 
   getAllMotherboardById(id: number) {

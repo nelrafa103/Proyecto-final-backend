@@ -18,7 +18,7 @@ export class Ram {
   Id_Generacion: number;
 
   @Column()
-  Capacidad: number;
+  Capacidad: string;
 
   @OneToOne((type) => Producto)
   @JoinColumn({ name: 'Id_Producto' })

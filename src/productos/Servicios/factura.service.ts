@@ -20,9 +20,9 @@ export class FacturaService {
       `INSERT INTO Factura (Id_Cliente, Total, Fecha, Descuento) VALUES ('${arg.Id_Cliente}', '${arg.Total}', '${arg.Fecha}', ${arg.Descuento} );`,
     );
   }
-  updateFacturabyId(arg: { Id: number; Nombre: string }) {
-    this.ClienteRepository.query(
-      `UPDATE Factura SET nombre = '${arg.Nombre}' WHERE Id = '${arg.Id}';`,
+  async getFacturabyId(arg: { Id: number;}) {
+   return this.ClienteRepository.query(
+      `SELECT Total From Factura WHERE Id_Cliente = '${arg.Id}';`,
     );
   }
 }

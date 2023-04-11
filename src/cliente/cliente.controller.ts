@@ -12,10 +12,13 @@ import { appendFile } from 'fs';
 import { ClienteInput, ClienteOutput } from './cliente.interface';
 import { sign } from 'crypto';
 import { Resolver } from 'dns';
+import { FacturaService } from 'src/productos/Servicios/factura.service';
+import { Factura } from 'src/productos/Categorias/factura.model';
 
 @Controller('cliente')
 export class ClienteController {
-  constructor(private readonly clienteService: ClienteService) {}
+  constructor(private readonly clienteService: ClienteService,
+    private readonly facturaService: FacturaService) {}
 
   // Obtener por Id
   @Get(':id')
@@ -42,11 +45,26 @@ export class ClienteController {
   // Obtener todos los clientes
   @Get()
   async getAllCliente() {
-    const cliente = await this.clienteService.getAllClientes();
-    if (!cliente) {
+    const clientes = await this.clienteService.getAllClientes();
+    if (!clientes) {
       throw new NotFoundException('No hay clientes en la tabla');
     }
-    return { cliente };
+   /* let productos: Array<any> = []
+    clientes.forEach((element,index) => {
+     productos.push(this.facturaService.getFacturabyId({Id:element.Id_Cliente}))
+    })*/
+   // 
+    return { 
+    clientes,
+    columnas: [
+      'Id',
+       "Nombre",
+       "Apellido",
+       "Telefono",
+       'Id',
+      'Total',
+      'Fecha'
+    ]};
   }
   // Añadir nuevo cliente
   @Post('new')

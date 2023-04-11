@@ -10,16 +10,37 @@ import {
 import { Proveedor } from './proveedor.model';
 import { ProveedorService } from './proveedor.service';
 import { ProveedorInput } from './Proveedor.interface';
+import { AlmacenService } from 'src/productos/Servicios/almacen.service';
 
 @Controller('proveedor')
 export class ProveedorController {
-  constructor(private readonly ProveedorService: ProveedorService) {}
+  constructor(
+    private readonly ProveedorService: ProveedorService,
+    private readonly almacenService: AlmacenService,
+  ) {}
 
   @Get()
-  getAllProviders() {
-    return this.ProveedorService.getAllProveedor();
+  async getAllProviders() {
+    const proveedor = await this.ProveedorService.getAllProveedor();
+    let productos: Array<any>;
+    proveedor.forEach((element) => {
+      productos.push(
+        this.almacenService.getAdquisicionesbyId({ Id: element.Id }),
+      );
+    });
+    return {
+      proveedor,
+      productos,
+      columnas: ['Nombre', 'Apellido','Precio','Cantidad comprada','Precio de Compra', 'Id del Producto' ],
+    };
   }
 
+  /*/*
+    
+   SELECT Nombre,Apellido,Pr.Precio,A.Cantidad,A.Compra,A.Id_Producto FROM Proveedor as P
+   Join Adquisiones as A on A.Id_Proveedor = P.Id_Proveedor
+   Join Producto as Pr on Pr.Id_Producto = A.Id_Producto
+*/ 
   @Post('new')
   insertNewProveedor(@Body() signInDto: ProveedorInput) {
     const nuevo = this.ProveedorService.insertProveedor(signInDto);

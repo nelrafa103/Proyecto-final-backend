@@ -26,4 +26,13 @@ export class RamService {
       `UPDATE Ram SET nombre = '${arg.Nombre}' WHERE id = '${arg.Id}';`,
     );
   }
+  async getAllRam() {
+   return this.ClienteRepository.query(`
+   SELECT M.Nombre, P.Precio, P.Id_Producto ,G.Id_Generacion FROM Ram as R
+   Join Generacion as G on G.Id_Generacion = R.Id_Generacion 
+   Join Producto as P on P.Id_Producto = R.Id_Producto 
+   JOIN Marca as M on M.Id_Marca = P.Id_Marca
+   ; 
+    `)
+  }
 }

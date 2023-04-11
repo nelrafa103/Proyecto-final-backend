@@ -11,13 +11,13 @@ import { Tipo } from './Auxiliares/Tipo.model';
 @Entity('producto')
 export class Producto {
   @PrimaryGeneratedColumn()
-  Id: number;
+  Id_Producto: number;
 
-  @Column({ length: 100 })
+  @Column()
   Precio: string;
 
-  @Column({ length: 100 })
-  Cantidad: string;
+  @Column({})
+  Cantidad: number;
 
   @ManyToOne((type) => Marca)
   @JoinColumn({ name: 'Id_Marca' })

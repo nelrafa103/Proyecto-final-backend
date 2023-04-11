@@ -8,4 +8,7 @@ export interface ProductoInput {
   Velocidad: number;
   Capacidad: number;
   Id_Generacion: number;
+  Id_Proveedor: number;
+  Fecha: Date
+  Compra: number
 }

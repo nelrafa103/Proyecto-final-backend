@@ -9,7 +9,7 @@ export class DetalleService {
     @InjectRepository(Detalle)
     private ClienteRepository: Repository<Detalle>,
   ) {}
-
+ // A
   async insertDetalle(arg: {
     Id_Factura: number;
     Cantidad: number;

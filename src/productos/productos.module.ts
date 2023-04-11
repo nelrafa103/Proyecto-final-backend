@@ -27,6 +27,8 @@ import { FacturaService } from './Servicios/factura.service';
 import { ComboService } from './Servicios/combo.service';
 import { DetalleComboService } from './Servicios/detalle-combo.service';
 import { DetalleService } from './Servicios/detalle.service';
+import { Adquisiciones } from './Auxiliares/adquisiones.model';
+import { AlmacenService } from './Servicios/almacen.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -41,6 +43,7 @@ import { DetalleService } from './Servicios/detalle.service';
       Combo,
       ComboDetalle,
       Detalle,
+      Adquisiciones
     ]),
     ChipModule,
     MotherboardModule,
@@ -58,6 +61,7 @@ import { DetalleService } from './Servicios/detalle.service';
     ConexionesService,
     ConexionService,
     FacturaService,
+    AlmacenService,
     ComboService,
     DetalleComboService,
     DetalleService,

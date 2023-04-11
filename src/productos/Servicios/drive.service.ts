@@ -10,7 +10,7 @@ export class DriveService {
     private ClienteRepository: Repository<DiscoDuro>,
   ) {}
 
-  insertDiscoDuro(arg: {
+  async insertDiscoDuro(arg: {
     Id_Modelo: number;
     Capacidad: number;
     Id_Producto: number;
@@ -23,5 +23,14 @@ export class DriveService {
     this.ClienteRepository.query(
       `UPDATE DiscoDuro SET nombre = '${arg.Nombre}' WHERE Id = '${arg.Id}';`,
     );
+  }
+
+  async getAllDrive() {
+   return this.ClienteRepository.query(`SELECT M.Nombre,P.Precio,P.Id_Producto,P.cantidad,D.Capacidad,c2.Nombre  FROM DiscoDuro as D
+    Join Modelo as M on M.Id_Modelo = D.Id_Modelo 
+    Join Producto  as P on P.Id_Producto = D.Id_Producto
+    Join Conexiones as C on C.Id_Producto = D.Id_Producto
+    Join Conexion as c2 on c2.Id_Conexion = C.Id_Conexion  ;
+   `)
   }
 }

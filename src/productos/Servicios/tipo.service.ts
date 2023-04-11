@@ -7,22 +7,27 @@ import { Tipo } from '../Auxiliares/Tipo.model';
 export class TipoService {
   constructor(
     @InjectRepository(Tipo)
-    private ClienteRepository: Repository<Tipo>,
+    private TipoRepository: Repository<Tipo>,
   ) {}
 
   insertTipo(arg: { Nombre: string }) {
-    this.ClienteRepository.query(
+    this.TipoRepository.query(
       `INSERT INTO TipoProducto (Nombre) VALUES ('${arg.Nombre}');`,
     );
   }
   updateTipobyId(arg: { Id: number; Nombre: string }) {
-    this.ClienteRepository.query(
+    this.TipoRepository.query(
       `UPDATE TipoProducto SET Nombre = '${arg.Nombre}' WHERE Id_Tipo = '${arg.Id}';`,
     );
   }
   async GetById(arg: { Id: number }): Promise<Tipo[]> {
-    return this.ClienteRepository.query(
+    return this.TipoRepository.query(
       `Select Nombre FROM TipoProducto WHERE Id_Tipo= '${arg.Id}'`,
     );
+
+  
   }
+  async GetAll() {
+    return this.TipoRepository.query(`Select Nombre FROM TipoProducto`)
+   }
 }

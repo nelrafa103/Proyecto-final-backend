@@ -12,8 +12,12 @@ export class ClienteService {
     private ClienteRepository: Repository<Cliente>,
   ) {}
 
-  getAllClientes() {
-    return this.ClienteRepository.query('SELECT Nombre,Apellido FROM Cliente;');
+  async getAllClientes(): Promise<Cliente[]> {
+    return this.ClienteRepository.query(`   
+    SELECT Nombre,Apellido,F.Fecha,F.Total,D.Id_Producto  FROM Cliente as C
+    JOIN Factura as F on F.Id_Factura = C.Id_Cliente
+    Join Detalle as D on D.Id_Factura = F.Id_Factura  
+    `);
   }
 
   findbyN(nombre: string) {

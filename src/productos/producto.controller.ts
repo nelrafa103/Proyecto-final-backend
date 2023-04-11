@@ -23,6 +23,7 @@ import { DetalleService } from './Servicios/detalle.service';
 import { ComboService } from './Servicios/combo.service';
 import { ComboInput } from './Interfaz/combo.interface';
 import { DetalleComboService } from './Servicios/detalle-combo.service';
+import { AlmacenService } from './Servicios/almacen.service';
 //import
 @Controller('producto')
 export class ProductoController {
@@ -42,6 +43,8 @@ export class ProductoController {
     private readonly detalleService: DetalleService,
     private readonly comboService: ComboService,
     private readonly detalleComboService: DetalleComboService,
+    private readonly adquisicionService: AlmacenService,
+
   ) {}
 
   @Post('new')
@@ -52,6 +55,9 @@ export class ProductoController {
       ['Procesador', ChipService],
       ['Tarjeta', this.motherboardService],
     ]); */
+
+    // Es necesario hacer un insert tambien en adquisiones
+  
     const marca = await this.marcaService.GetById({ Id: entrada.Id_Marca });
     const tipo = await this.tipoService.GetById({ Id: entrada.Id_Tipo });
     console.log(tipo);
@@ -62,26 +68,45 @@ export class ProductoController {
       console.log(marca);
       throw new NotFoundException('No existe un tipo con ese Id');
     } else {
+      console.log(entrada)
+      const nuevo = await this.productoService.insertProducto(entrada);
+      if (!nuevo) {
+        return new NotFoundException('No se podido crear un nuevo producto');
+      }
+      // console.log(nuevo)
+      // console.log(tipo[0])
+      // console.log(entrada.Id_Generacion,nuevo.insertId,entrada.Capacidad)
+      const adquisicion = await this.adquisicionService.insertAdquisiciones({
+        Id_Producto: nuevo.insertId,
+        Id_Proveedor: entrada.Id_Proveedor,
+        Cantidad: entrada.Cantidad,
+        Fecha: entrada.Fecha,
+        Compra: entrada.Compra
+      })
+      if(!adquisicion) {
+        throw new NotFoundException('No se ha encontrado nada')
+      }
+      console.log(adquisicion)
       switch (tipo[0].Nombre) {
         case 'DiscoDuro':
           // Recordar añadir registros a la tabla conexiones
           this.driveService.insertDiscoDuro({
             Id_Modelo: entrada.Id_Modelo,
-            Id_Producto: entrada.Id_Producto,
+            Id_Producto: nuevo.insertId,
             Capacidad: entrada.Capacidad,
           });
           break;
         case 'Ram':
           this.ramService.insertRam({
             Id_Generacion: entrada.Id_Generacion,
-            Id_Producto: entrada.Id_Producto,
+            Id_Producto: nuevo.insertId,
             Capacidad: entrada.Capacidad,
           });
           break;
         case 'Procesador':
           this.chipService.insertProcesador({
             Id_Modelo: entrada.Id_Modelo,
-            Id_Producto: entrada.Id_Producto,
+            Id_Producto: nuevo.insertId,
             Velocidad: entrada.Velocidad,
           });
           break;
@@ -90,18 +115,15 @@ export class ProductoController {
           this.motherboardService.insertTarjeta({
             Id_Generacion: entrada.Id_Generacion,
             Id_Modelo: entrada.Id_Modelo,
-            Id_Producto: entrada.Id_Producto,
+            Id_Producto: nuevo.insertId,
           });
           break;
       }
       // Añadir un index a cada uno de los servicios.
     }
-    const nuevo = await this.productoService.insertProducto(entrada);
-    if (!nuevo) {
-      return new NotFoundException('No se podido crear un nuevo producto');
-    }
-
-    return { nuevo };
+   
+   
+    return {}
   }
 
   @Post('new/marca')
@@ -138,6 +160,7 @@ export class ProductoController {
     });
   }
 
+  //Hay que revisar este codigo; Hay que hacer una resta en la nueva factura
   @Post('new/factura')
   async createFactura(@Body() entrada: FacturaInput) {
     const factura = await this.facturaService.insertFactura({
@@ -182,4 +205,92 @@ export class ProductoController {
       newCombo,
     };
   }
+
+  @Get()
+ async getAllproducts() {
+    const productos = await this.productoService.getAllProducts();
+    if(!productos) {
+      throw new NotFoundException('No se podido realizar la consulta')
+    }
+    return {
+      productos,
+      columnas: [
+        "Cantidad",
+        "Precio",
+        "Id",
+        "Marca",
+        "Tipo"
+      ]
+    }
+  }
+ @Get('tipo')
+ async getAllTipos() {
+   const tipos = await this.tipoService.GetAll()
+   return {tipos}
+ }
+
+ @Get('ram')
+ async getAllRam() {
+   const productos = await this.ramService.getAllRam()
+   return {productos,
+    columnas: [
+      "Cantidad",
+      "Precio",
+      "Id",
+      "Marca",
+      "Velocidad",
+      "Generacion"
+    ]}
+ }
+ @Get('tarjeta')
+ async getAllTarjeta() {
+   const productos = await this.motherboardService.getAllMotherboard()
+   return {productos,
+    columnas: [
+      "Cantidad",
+      "Precio",
+      "Id",
+      "Marca",
+      "Conexiones",
+      "Modelo"
+    ]}
+ }
+ @Get('procesador')
+ async getAllProcesador() {
+   const productos = await this.chipService.getAllChips()
+   return {productos,
+    columnas: [
+      "Cantidad",
+      "Precio",
+      "Id",
+      "Marca",
+      "Velocidad",
+      "Modelo",
+    ]}
+ }
+ @Get('discoduro')
+ async getAllDiscoDuro() {
+   const productos = await this.driveService.getAllDrive()
+   return {productos,
+    columnas: [
+      "Cantidad",
+      "Precio",
+      "Id",
+      "Marca",
+      "Modelo",
+      "Conexiones"
+    ]}
+ }
+ @Get('combo')
+ async getAllCombo() {
+    const combos = await this.comboService.getAllCombos()
+     return {
+      combos,
+      columnas: [
+        "Nombre",
+        "Precio",
+        "Cantidad"
+      ]
+     }
+ }
 }
